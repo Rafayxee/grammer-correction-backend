@@ -13,9 +13,14 @@ app.use(cors());
 app.use(express.json());
 
 // OpenAI Configuration
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error('Missing OpenAI API key in environment variables');
+}
+
 const openai = new OpenAI({
-  apiKey: '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'
+  apiKey: process.env.OPENAI_API_KEY
 });
+
 
 // JWT Secret (in production, use environment variable)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
@@ -56,8 +61,10 @@ const authenticateToken = (req, res, next) => {
 
 // Health check endpoint
 app.get('/', (req, res) => {
+  // console.log(process.env.OPENAI_API_KEY);
   res.json({
     message: 'Grammar Correction API is running!',
+
     endpoints: {
       login: 'POST /api/login',
       grammarCheck: 'POST /api/grammar-check (requires auth)',
