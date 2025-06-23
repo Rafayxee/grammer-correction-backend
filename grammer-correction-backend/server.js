@@ -14,7 +14,7 @@ app.use(express.json());
 
 // OpenAI Configuration
 const openai = new OpenAI({
-  apiKey: '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'
+  apiKey: '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'
 });
 
 // JWT Secret (in production, use environment variable)
@@ -56,7 +56,7 @@ const authenticateToken = (req, res, next) => {
 
 // Health check endpoint
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'Grammar Correction API is running!',
     endpoints: {
       login: 'POST /api/login',
@@ -176,7 +176,7 @@ app.post('/api/grammar-check', authenticateToken, async (req, res) => {
 
   } catch (error) {
     console.error('Grammar check error:', error);
-    
+
     if (error.status === 401) {
       res.status(401).json({ error: 'OpenAI API authentication failed' });
     } else if (error.status === 429) {
